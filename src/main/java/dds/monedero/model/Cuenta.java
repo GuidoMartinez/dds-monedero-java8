@@ -11,6 +11,9 @@ import java.util.List;
 
 public class Cuenta {
 
+  private final static Integer cantidadMaximaMovimientos = 3;
+  private final static Integer montoMaximoDeExtraccion = 1000;
+
   private double saldo;
   private List<Movimiento> movimientos = new ArrayList<>();
 
@@ -30,8 +33,8 @@ public class Cuenta {
       throw new MontoNegativoException(montoDeposito + ": el monto a ingresar debe ser un valor positivo");
     }
 
-    if (getMovimientos().stream().filter(Movimiento::isDeposito).count() >= 3) {
-      throw new MaximaCantidadDepositosException("Ya excedio los " + 3 + " depositos diarios");
+    if (getMovimientos().stream().filter(Movimiento::isDeposito).count() >= cantidadMaximaMovimientos) {
+      throw new MaximaCantidadDepositosException("Ya excedio los " + cantidadMaximaMovimientos + " depositos diarios");
     }
 
     new Extraccion(LocalDate.now(), montoDeposito).agregateA(this);
@@ -45,9 +48,9 @@ public class Cuenta {
       throw new SaldoMenorException("No puede sacar mas de " + getSaldo() + " $");
     }
     double montoExtraidoHoy = getMontoExtraidoA(LocalDate.now());
-    double limite = 1000 - montoExtraidoHoy;
+    double limite = montoMaximoDeExtraccion - montoExtraidoHoy;
     if (montoExtraccion > limite) {
-      throw new MaximoExtraccionDiarioException("No puede extraer mas de $ " + 1000
+      throw new MaximoExtraccionDiarioException("No puede extraer mas de $ " + montoMaximoDeExtraccion
           + " diarios, límite: " + limite);
     }
     new Extraccion(LocalDate.now(), montoExtraccion).agregateA(this);
