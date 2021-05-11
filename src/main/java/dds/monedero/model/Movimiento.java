@@ -36,11 +36,11 @@ public abstract class Movimiento {
   }
 
   public boolean isDeposito() {
-    return esDeposito;
+    return false;
   }
 
   public boolean isExtraccion() {
-    return !esDeposito;
+    return false;
   }
 
   public void agregateA(Cuenta cuenta) {
@@ -48,11 +48,5 @@ public abstract class Movimiento {
     cuenta.agregarMovimiento(fecha, monto, esDeposito);
   }
 
-  public double calcularValor(Cuenta cuenta) {
-    if (esDeposito) {
-      return cuenta.getSaldo() + getMonto();
-    } else {
-      return cuenta.getSaldo() - getMonto();
-    }
-  }
+  public abstract double calcularValor(Cuenta cuenta);
 }

@@ -7,4 +7,13 @@ public class Extraccion extends Movimiento{
   public Extraccion(LocalDate fecha, double monto, boolean esDeposito) {
     super(fecha, monto, esDeposito);
   }
+
+  @Override
+  public double calcularValor(Cuenta cuenta) {
+    return cuenta.getSaldo() - getMonto();
+  }
+  @Override
+  public boolean isExtraccion(){
+    return true;
+  }
 }
