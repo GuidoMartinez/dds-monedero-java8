@@ -37,7 +37,7 @@ public class Cuenta {
       throw new MaximaCantidadDepositosException("Ya excedio los " + cantidadMaximaMovimientos + " depositos diarios");
     }
 
-    new Extraccion(LocalDate.now(), montoDeposito).agregateA(this);
+    new Deposito(LocalDate.now(), montoDeposito).agregateA(this);
   }
 
   public void sacar(double montoExtraccion) {
