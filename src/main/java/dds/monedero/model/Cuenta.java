@@ -12,8 +12,8 @@ public class Cuenta {
   private double saldo;
   private List<Movimiento> movimientos = new ArrayList<>();
 
-  private static final Integer cantidadMaximaMovimientos = 3;
-  private static final Integer montoMaximoDeExtraccion = 1000;
+  private static final Integer CANTIDAD_MAXIMA_MOVIMIENTOS = 3;
+  private static final Integer MONTO_MAXIMO_EXTRACCION = 1000;
 
   public Cuenta() {
     this(0);
@@ -51,9 +51,9 @@ public class Cuenta {
     }
 
     if (getMovimientos().stream().filter(Movimiento::isDeposito).count()
-        >= cantidadMaximaMovimientos) {
+        >= CANTIDAD_MAXIMA_MOVIMIENTOS) {
       throw new MaximaCantidadDepositosException("Ya excedio los "
-          + cantidadMaximaMovimientos + " depositos diarios");
+          + CANTIDAD_MAXIMA_MOVIMIENTOS + " depositos diarios");
     }
   }
 
@@ -67,14 +67,14 @@ public class Cuenta {
     }
     if (montoExtraccion > getLimiteDisponible()) {
       throw new MaximoExtraccionDiarioException("No puede extraer mas de $ "
-          + montoMaximoDeExtraccion
+          + MONTO_MAXIMO_EXTRACCION
           + " diarios, límite: " + getLimiteDisponible());
     }
   }
 
   private double getLimiteDisponible() {
     double montoExtraidoHoy = getMontoExtraidoA(LocalDate.now());
-    return montoMaximoDeExtraccion - montoExtraidoHoy;
+    return MONTO_MAXIMO_EXTRACCION - montoExtraidoHoy;
   }
 
   public List<Movimiento> getMovimientos() {
