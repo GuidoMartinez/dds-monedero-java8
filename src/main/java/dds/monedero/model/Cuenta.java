@@ -25,7 +25,9 @@ public class Cuenta {
 
   public void poner(double montoDeposito) {
     validarDeposito(montoDeposito);
-    new Deposito(LocalDate.now(), montoDeposito).agregateA(this);
+    Movimiento deposito = new Deposito(LocalDate.now(), montoDeposito);
+    setSaldo(deposito.calcularValor(this));
+    movimientos.add(deposito);
   }
 
   public void sacar(double montoExtraccion) {
